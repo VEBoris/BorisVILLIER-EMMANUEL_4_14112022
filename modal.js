@@ -216,7 +216,7 @@ function validationForm() {
     confirmation.style.fontSize = "30px";
     confirmation.style.textAlign = "center";
     confirmation.style.display = "flex";
-    confirmation.style.margin = "0 0 1em 0";
+    confirmation.style.margin = "0 15px 1em 0";
     closeBtn.style.display = "block";
     closeBtn.style.margin = "2em auto 2em auto";
     closeBtn.addEventListener("click");
