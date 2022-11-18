@@ -25,16 +25,15 @@ const closeBtn = document.getElementById("close-btn");
 // Empty Elements Forms
 const emptyFirstName = document.getElementById("firstname-empty");
 const emptyLastName = document.getElementById("lastname-empty");
-const emptyEmail = document.getElementById("mail-empty");
+const emptyEmail = document.getElementById("email-empty");
 const emptyBirth = document.getElementById("birth-empty");
 const emptyPartipation = document.getElementById("participation-empty");
 const emptyLocations = document.getElementById("location-empty");
 const emptyCheckbox = document.getElementById("checkbox-empty");
 
 // Regex
-const regexName = /^[a-zA-Z\-àâçéèêëîïôûùüÿñæœ']{1}$/;
-const regexEmail =
-  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+const regexNumber = /^[0-9]{1,3}$/;
+const regexEmail = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/;
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -61,7 +60,7 @@ closeBtn.addEventListener("click", function () {
 // Menu navbar
 menu.addEventListener("click", editNav);
 function editNav() {
-  var x = document.getElementById("myTopnav");
+  let x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
     x.className += " responsive";
   } else {
@@ -78,12 +77,15 @@ function errorMessage(value) {
 
 // Vérification saisie Prénom
 function checkFirstName() {
+  const regexName = new RegExp(/^[a-zA-Z-àâçéèêëîïôûùüÿñæœ']{2,}$/, "g");
+
+
   if (!firstName.value) {
     emptyFirstName.innerHTML = "Veuillez saisir votre Prénom";
     emptyFirstName.style.display = "block";
     errorMessage(emptyFirstName);
     return false;
-  } else if (firstName.value.search(regexName) == false) {
+  } else if (regexName.test(firstName.value) == false) {
     emptyFirstName.innerHTML = "Veuillez saisir un minimum de 2 caractère";
     emptyFirstName.style.display = "block";
     errorMessage(emptyFirstName);
@@ -95,11 +97,14 @@ function checkFirstName() {
 
 // Vérification saisie Nom
 function checkLastName() {
+  const regexName = new RegExp(/^[a-zA-Z-àâçéèêëîïôûùüÿñæœ']{2,}$/, "g");
+
+
   if (!lastName.value) {
     emptyLastName.innerHTML = "Veuillez saisir votre Nom";
     emptyLastName.style.display = "block";
     return false;
-  } else if (lastName.value.search(regexName) == false) {
+  } else if (regexName.test(lastName.value) == false) {
     emptyLastName.innerHTML = "Veuillez saisir un minimum de 2 caractère";
     emptyLastName.style.display = "block";
     errorMessage(emptyLastName);
@@ -127,6 +132,21 @@ function checkEmail() {
   }
 }
 
+// Input Maxi Today
+let today = new Date();
+let dd = today.getDate();
+let mm = today.getMonth() + 1;
+let yyyy = today.getFullYear();
+if (dd < 10) {
+  dd = "0" + dd;
+}
+if (mm < 10) {
+  mm = "0" + mm;
+}
+today = yyyy + "-" + mm + "-" + dd;
+birthdate.setAttribute("min", "1900-01-01");
+birthdate.setAttribute("max", today);
+
 // Vérification saisie Date de Naissance
 function checkBirth() {
   if (!birth.value) {
@@ -148,7 +168,11 @@ function checkParticipation() {
     emptyPartipation.style.display = "block";
     errorMessage(emptyPartipation);
     return false;
-  } else if (participation.value > 99) {
+  } else if (
+    participation.value > 99 ||
+    participation.value < 0 ||
+    regexNumber.test(participation.value) == false
+  ) {
     emptyPartipation.innerHTML =
       "Veuillez saisir un nombre valide (entre 0 et 99)";
     emptyPartipation.style.display = "block";
@@ -203,7 +227,7 @@ function validationForm() {
   const resultParticipation = checkParticipation();
   const resultLocations = checkLocations();
   const resultCondition = checkCondition();
-  
+
   if (
     resultFirstName &&
     resultLastName &&
