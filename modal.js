@@ -6,17 +6,21 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 
-// Form Elements
+// Form inputs elements
 const firstName = document.getElementById("first");
 const lastName = document.getElementById("last");
 const email = document.getElementById("email");
 const birth = document.getElementById("birthdate");
 const participation = document.getElementById("quantity");
 const locations = document.getElementsByName("location");
-const checkbox = document.getElementsByClassName(".checkbox-icon");
+const checkboxCondition = document.getElementById("checkbox1");
+
+// Form elements
 const close = document.querySelector(".close");
 const btnSubmit = document.getElementsByClassName("btn-submit");
 const form = document.querySelector("form");
+const confirmation = document.getElementById("confirmation");
+const closeBtn = document.getElementById("close-btn");
 
 // Empty Elements Forms
 const emptyFirstName = document.getElementById("firstname-empty");
@@ -29,7 +33,7 @@ const emptyCheckbox = document.getElementById("checkbox-empty");
 
 // Regex
 const regexName = /^[a-zA-Z\-àâçéèêëîïôûùüÿñæœ']{1}$/;
-const regexEmail = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/;
+const regexEmail = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -39,8 +43,17 @@ function launchModal() {
   modalbg.style.display = "block";
 }
 
-// Close button
+// Message de confirmation invisible
+closeBtn.style.display = "none";
+confirmation.style.display = "none";
+
+// Close button icon
 close.addEventListener("click", function () {
+  modalbg.style.display = "none";
+});
+
+// Close button du message de confirmation
+closeBtn.addEventListener("click", function () {
   modalbg.style.display = "none";
 });
 
@@ -102,7 +115,7 @@ function checkEmail() {
     emptyEmail.style.display = "block";
     errorMessage(emptyEmail);
     return false;
-  } else if (regexEmail.test(email.value) == null) {
+  } else if (regexEmail.exec(email.value) == null) {
     emptyEmail.innerHTML = "Veuillez saisir une adresse email valide";
     emptyEmail.style.display = "block";
     errorMessage(emptyEmail);
@@ -128,7 +141,7 @@ function checkBirth() {
 
 // Vérification saisie Participation
 function checkParticipation() {
-  if (!participation.value) {
+  if (!participation.value || isNaN(participation.value)) {
     emptyPartipation.innerHTML =
       "Veuillez renseigner le nombre de participation ";
     emptyPartipation.style.display = "block";
@@ -144,22 +157,31 @@ function checkParticipation() {
   }
 }
 
+// Vérification radio button ville selected
 function checkLocations() {
-  for (let i = 0; i < locations.length; i++) {
-    if (locations[i].checked) {
-      emptyLocations.innerHTML = "Veuillez choisir une ville";
-      emptyLocations.style.display = "block";
-      errorMessage(emptyLocations);
-      return false;
-    } else {
-      emptyLocations.style.display = "none";
-      return true;
-    }
+  if (
+    !(
+      locations[0].checked ||
+      locations[1].checked ||
+      locations[2].checked ||
+      locations[3].checked ||
+      locations[4].checked ||
+      locations[5].checked
+    )
+  ) {
+    emptyLocations.innerHTML = "Veuillez choisir une ville";
+    emptyLocations.style.display = "block";
+    errorMessage(emptyLocations);
+    return false;
+  } else {
+    emptyLocations.style.display = "none";
+    return true;
   }
 }
 
+// Vérification si condition d'utilisation selected
 function checkCondition() {
-  if (!checkbox.checked) {
+  if (!checkboxCondition.checked) {
     emptyCheckbox.innerHTML = "Veuillez accepter les conditions d'utilisations";
     emptyCheckbox.style.display = "block";
     errorMessage(emptyCheckbox);
@@ -170,7 +192,7 @@ function checkCondition() {
   }
 }
 
-//  Verfication des saisies sur le Form
+//  Verfication des saisies (inputs & radio buttons, checkbox) sur le Form
 function validationForm() {
   let resultFirstName = checkFirstName();
   let resultLastName = checkLastName();
@@ -189,7 +211,16 @@ function validationForm() {
     resultLocations &&
     resultCondition
   ) {
-    modalbg.style.display = "none";
+    // Affichage du message de confirmation
+    form.style.display = "none";
+    confirmation.style.fontSize = "30px";
+    confirmation.style.textAlign = "center";
+    confirmation.style.display = "flex";
+    confirmation.style.margin = "0 0 1em 0";
+    closeBtn.style.display = "block";
+    closeBtn.style.margin = "2em auto 2em auto";
+    closeBtn.addEventListener("click");
+    submitBtn.style.display = "none";
     return true;
   }
 }
@@ -201,11 +232,9 @@ form.addEventListener("submit", function (event) {
 
   if (form.checkValidity === true) {
     setTimeout(validationForm, 1000);
-    modalbg.style.display = "none";
     return true;
   } else {
     validationForm();
   }
 
-  console.log("submit");
 });
