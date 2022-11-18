@@ -33,7 +33,8 @@ const emptyCheckbox = document.getElementById("checkbox-empty");
 
 // Regex
 const regexName = /^[a-zA-Z\-àâçéèêëîïôûùüÿñæœ']{1}$/;
-const regexEmail = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+const regexEmail =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -148,7 +149,8 @@ function checkParticipation() {
     errorMessage(emptyPartipation);
     return false;
   } else if (participation.value > 99) {
-    emptyPartipation.innerHTML = "Veuillez saisir un nombre valide";
+    emptyPartipation.innerHTML =
+      "Veuillez saisir un nombre valide (entre 0 et 99)";
     emptyPartipation.style.display = "block";
     errorMessage(emptyPartipation);
   } else {
@@ -194,14 +196,14 @@ function checkCondition() {
 
 //  Verfication des saisies (inputs & radio buttons, checkbox) sur le Form
 function validationForm() {
-  let resultFirstName = checkFirstName();
-  let resultLastName = checkLastName();
-  let resultEmail = checkEmail();
-  let resulBirth = checkBirth();
-  let resultParticipation = checkParticipation();
-  let resultLocations = checkLocations();
-  let resultCondition = checkCondition();
-
+  const resultFirstName = checkFirstName();
+  const resultLastName = checkLastName();
+  const resultEmail = checkEmail();
+  const resulBirth = checkBirth();
+  const resultParticipation = checkParticipation();
+  const resultLocations = checkLocations();
+  const resultCondition = checkCondition();
+  
   if (
     resultFirstName &&
     resultLastName &&
