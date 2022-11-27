@@ -247,11 +247,6 @@ function validationForm() {
     confirmation.style.margin = "10em 15px 10em 15px";
     closeBtn.style.display = "block";
     closeBtn.style.margin = "2em auto 2em auto";
-    // display: flex;
-    // justify-content: center;
-    // font-size: 30px;
-    // text-align: center;
-    // margin: 10em 15px 10em 15px;
     return true;
   }
 }
