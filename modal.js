@@ -103,6 +103,7 @@ function checkLastName() {
   if (!lastName.value) {
     emptyLastName.innerHTML = "Veuillez saisir votre Nom";
     emptyLastName.style.display = "block";
+    errorMessage(emptyLastName);
     return false;
   } else if (regexName.test(lastName.value) == false) {
     emptyLastName.innerHTML = "Veuillez saisir un minimum de 2 caractère";
@@ -239,14 +240,18 @@ function validationForm() {
   ) {
     // Affichage du message de confirmation
     form.style.display = "none";
+    confirmation.style.display = "flex";
+    confirmation.style.justifyContent = "center";
     confirmation.style.fontSize = "30px";
     confirmation.style.textAlign = "center";
-    confirmation.style.display = "flex";
-    confirmation.style.margin = "0 15px 1em 0";
+    confirmation.style.margin = "10em 15px 10em 15px";
     closeBtn.style.display = "block";
     closeBtn.style.margin = "2em auto 2em auto";
-    closeBtn.addEventListener("click");
-    submitBtn.style.display = "none";
+    // display: flex;
+    // justify-content: center;
+    // font-size: 30px;
+    // text-align: center;
+    // margin: 10em 15px 10em 15px;
     return true;
   }
 }
@@ -262,5 +267,4 @@ form.addEventListener("submit", function (event) {
   } else {
     validationForm();
   }
-
 });
