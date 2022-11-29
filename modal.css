@@ -166,7 +166,7 @@ main {
   height: 100%;
   width: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0);
+  background-color: rgb(255, 255, 255);
 }
 
 .content {
@@ -175,6 +175,7 @@ main {
   max-width: 500px;
   animation-name: modalopen;
   animation-duration: var(--modal-duration);
+  background: #232323;
   border-radius: 10px;
   overflow: hidden;
   position: relative;
@@ -596,5 +597,13 @@ footer {
   .hero-text {
     max-width: 80%;
     padding-left: 0;
+  }
+
+  .bground {
+    background-color: rgb(255, 255, 255, 0);
+  }
+
+  .content {
+    top: 3em;
   }
 }
