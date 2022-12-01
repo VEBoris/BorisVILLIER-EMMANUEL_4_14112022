@@ -1,3 +1,7 @@
+
+
+const header = document.getElementById("myTopnav");
+
 // Navbar
 const menu = document.querySelector(".main-navbar .icon");
 
@@ -34,6 +38,22 @@ const emptyCheckbox = document.getElementById("checkbox-empty");
 // Regex
 const regexNumber = /^[0-9]{1,3}$/;
 const regexEmail = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/;
+
+
+// console.log(header);
+const sticky = header.offsetTop;
+
+
+window.onscroll = function() {myfunction()};
+
+
+function myfunction() {
+  if (window.pageYOffset > sticky ) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
+}
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -263,3 +283,4 @@ form.addEventListener("submit", function (event) {
     validationForm();
   }
 });
+

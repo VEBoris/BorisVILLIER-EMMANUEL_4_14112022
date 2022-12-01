@@ -606,4 +606,14 @@ footer {
   .content {
     top: 3em;
   }
+
+  .sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    background-color: #fff;
+    padding: 4%;
+    margin: 0;
+  }
 }
