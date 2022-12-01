@@ -1,8 +1,5 @@
-
-
-const header = document.getElementById("myTopnav");
-
 // Navbar
+const header = document.getElementById("myTopnav");
 const menu = document.querySelector(".main-navbar .icon");
 
 // DOM Elements
@@ -39,8 +36,7 @@ const emptyCheckbox = document.getElementById("checkbox-empty");
 const regexNumber = /^[0-9]{1,3}$/;
 const regexEmail = /^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$/;
 
-
-// console.log(header);
+// Topnav responsive
 const sticky = header.offsetTop;
 
 
